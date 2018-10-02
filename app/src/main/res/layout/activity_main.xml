@@ -25,4 +25,9 @@
         android:text="call"
         android:id="@+id/btCall"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SMS"
+        android:id="@+id/btSMS"/>
 </LinearLayout>

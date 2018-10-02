@@ -1,3 +1,3 @@
 git add --all
-git commit -m "go Dial and Call"
+git commit -m "go SmS"
 git push -u origin master
