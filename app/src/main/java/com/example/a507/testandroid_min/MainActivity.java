@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    protected Button btHomePage, btDial, btCall, btSMS;
+    protected Button btHomePage, btDial, btCall, btSMS, btMAP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:0428297670"));
                 intent.putExtra("sms_body","Mokwon University");
+                startActivity(intent);
+            }
+        });
+        btMAP =(Button) findViewById(R.id.btMAP);
+        btMAP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:36.321609,127.337957?z=20"));
                 startActivity(intent);
             }
         });
