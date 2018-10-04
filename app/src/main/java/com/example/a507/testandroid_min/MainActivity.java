@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    protected Button btHomePage, btDial, btCall, btSMS, btMAP;
+    protected Button btHomePage, btDial, btCall, btSMS, btMAP, btREC;
+    protected TextView txRcog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:36.321609,127.337957?z=20"));
                 startActivity(intent);
+            }
+        });
+        txRcog = (TextView) findViewById(R.id.txRecog);
+        btREC = (Button) findViewById(R.id.btREC);
+        btREC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
