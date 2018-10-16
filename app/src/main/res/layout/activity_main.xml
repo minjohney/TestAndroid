@@ -40,7 +40,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RECORD"
+        android:text="RECOG"
         android:id="@+id/btREC"
         />
 

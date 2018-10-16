@@ -2,15 +2,19 @@ package com.example.a507.testandroid_min;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
     protected Button btHomePage, btDial, btCall, btSMS, btMAP, btREC;
     protected TextView txRcog;
+    private static int CODE_RECOG = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +66,18 @@ public class MainActivity extends AppCompatActivity {
         btREC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                voiceRecog();
 
             }
         });
 
+    }
+
+    private void voiceRecog()
+    {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.KOREAN);
+        startActivityForResult(intent, CODE_RECOG);
     }
 }
