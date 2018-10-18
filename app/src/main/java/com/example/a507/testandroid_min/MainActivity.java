@@ -1,14 +1,18 @@
 package com.example.a507.testandroid_min;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.speech.RecognizerIntent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -77,7 +81,24 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        //FREE_FORM : 내가 가지고 있는 정보 확인, WEB : 서버 정보에 있는 것까지
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.KOREAN);
         startActivityForResult(intent, CODE_RECOG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data); //부모함수 호출
+        if(requestCode == CODE_RECOG)
+        {
+            if(resultCode == Activity.RESULT_OK && data != null)
+            {
+                ArrayList<String> arList = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String sRecog = arList.get(0);
+                txRcog.setText(sRecog);
+
+        }
+
+
     }
 }
