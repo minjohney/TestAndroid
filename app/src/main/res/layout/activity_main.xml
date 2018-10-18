@@ -25,6 +25,7 @@
         android:text="call"
         android:id="@+id/btCall"/>
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,4 +50,16 @@
         android:layout_height="wrap_content"
         android:text="Voice Recognition"
         android:id="@+id/txRecog"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/extts"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btTTS"/>
+
 </LinearLayout>
+
