@@ -41,12 +41,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 speakStr(extts.getText().toString());
             }
         });
+
+
         tts = new TextToSpeech(this, this);
         btEcho = (Button) findViewById(R.id.btEcho);
         btEcho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 voiceRecog(CODE_ECHO);
+
             }
         });
         etRelay = (EditText) findViewById(R.id.etRelay);
@@ -134,6 +137,26 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
+    private String getPhoneNumFromName(String sName) {
+        String sPhoneNum = "";
+        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode("정통이"));//강제생성
+        String[] arProjection = new String[]{ContactsContract.Contacts._ID};
+        Cursor cursor = getContentResolver().query(uri, arProjection, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            String sId = cursor.getString(0);
+            String[] arProjNum = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
+            String sWhereNum = ContactsContract.Data.MIMETYPE + " = ? AND " + ContactsContract.CommonDataKinds.StructuredName.CONTACT_ID + " = ?";
+            String[] sWhereNumParam = new String[]{ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE, sId};
+            Cursor cursorNum = getContentResolver().query(ContactsContract.Data.CONTENT_URI, arProjNum, sWhereNum, sWhereNumParam, null);
+            if (cursorNum != null && cursorNum.moveToFirst()) {
+                sPhoneNum = cursorNum.getString(0);
+                }
+                cursorNum.close();
+            }
+            cursor.close();
+        return sPhoneNum;
+    }
+
     private void voiceRecog(int nCode) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -166,12 +189,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 }
                 speakStr(sRecog);
             } else if (requestCode == CODE_CONTACT) {
-                String[] sFilter = {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
-                Cursor cursor =  getContentResolver().query(data.getData(), sFilter, null, null, null);
+                String[] sFilter = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
+                Cursor cursor = getContentResolver().query(data.getData(), sFilter, null, null, null);
                 //ContentResolver 클래스를 불러옴/다른 manager와 달리 resolver라 붙임, 앞에서 setData  한것을 getData 하여 Uri를 불러옴
                 //Cursor: 결과를 추적하기 위한 지칭
-                if(cursor != null)
-                {
+                if (cursor != null) {
                     cursor.moveToFirst();
                     String sName = cursor.getString(0);
                     String sPhoneNum = cursor.getString(1);
